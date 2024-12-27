@@ -2,6 +2,8 @@
 
 This project demonstrates autonomous docking of a Turtlebot Waffle towards an April Tag using ROS 2 and the Nav2 stack. The robot navigates in a custom-built environment, utilizing SLAM for mapping, AMCL for localization, and both global and local planners for path planning. Key components include camera image rectification, April Tag detection, and waypoint navigation to achieve precise docking.
 
+[Uploading Screencast from 12-20-2024 01_49_19 PM.webm…]()
+
 ## Features
 
 - **Custom World:** The project uses a custom simulation world created in Gazebo.
