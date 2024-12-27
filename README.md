@@ -34,8 +34,7 @@ This project demonstrates autonomous docking of a Turtlebot Waffle towards an Ap
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your_username/april_tag_docking.git
-   cd april_tag_docking
+   git clone https://github.com/Thomasjc01/April-Tag-Based-Docking-Using-nav2
    ```
 2. Install dependencies:
    ```bash
@@ -76,23 +75,30 @@ ros2 run nav2_map_server map_saver_cli -f <map_name>
 Run AMCL to localize the robot in the mapped environment:
 
 ```bash
-ros2 launch april_tag_docking localization.launch.py
+ros2 launch my_package world_launch.py
 ```
 
-### 4. April Tag Detection
+### 4. Image Rectification and April Tag Detection
 
-Detect April Tags in the environment:
+Detect April Tags in the environment and publish their tf:
 
 ```bash
-ros2 launch april_tag_docking apriltag_detection.launch.py
+ros2 launch my_docking_pkg apriltag_tf_publisher.launch.py
 ```
 
-### 5. Navigation and Docking
+### 5. Navigation 
 
-Execute the docking procedure:
+Launch the nav2 Node:
 
 ```bash
-ros2 launch april_tag_docking docking.launch.py
+ros2 launch nav2_pkg nav2_launch.py
+```
+
+### 6. Docking
+
+Move towards the april tag and perform docking.
+```bash
+ros2 run my_docking_pkg dock.py
 ```
 
 ## Workflow
@@ -102,39 +108,19 @@ ros2 launch april_tag_docking docking.launch.py
 3. **Transform Calculation:** Using the TF between the map frame and the docking station’s tag frame, the docking station’s coordinates are computed.
 4. **Navigation:** Nav2’s FollowWaypoints guides the Turtlebot Waffle to the docking station using the calculated coordinates.
 
-## Files and Directories
-
-- `launch/`
-  - `bringup.launch.py`: Launches the Gazebo simulation.
-  - `localization.launch.py`: Starts the AMCL localization node.
-  - `apriltag_detection.launch.py`: Runs the April Tag detection pipeline.
-  - `docking.launch.py`: Executes the docking process.
-- `worlds/`: Contains the custom Gazebo world files.
-- `maps/`: Includes saved maps for localization.
-- `config/`: Contains configuration files for planners, controllers, and AMCL.
 
 ## Results
 
-The Turtlebot Waffle successfully detects the April Tag, navigates to the docking station, and docks accurately using ROS 2 and Nav2-based waypoint following.
+- The Turtlebot Waffle successfully detects the April Tag, navigates to the docking station, and docks accurately using ROS 2 and Nav2-based waypoint following.
+- Dynamic Obstable Avoidance using the Local Planner.
+- This approach for docking does not rely on continuous camera data. Once the tf is published, camera data is no longer necessary, making it deployable in environments where camera data is not always available.
 
 ## Future Improvements
 
-- Add obstacle avoidance during docking.
-- Integrate dynamic re-planning to handle moving obstacles.
 - Optimize camera calibration for higher precision in April Tag detection.
 
-## Acknowledgments
 
-- ROS 2 and Nav2 maintainers
-- Open Source contributors for `apriltag_ros` and `image_proc`
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-
-For any questions or issues, please contact Thomas J C ([thomas.jc@domain.com](mailto\:thomas.jc@domain.com)).
 
 
 
